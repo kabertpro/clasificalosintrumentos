@@ -38,6 +38,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const TOTAL_STAGES = 20;
     const STAR_TIME_THRESHOLD = 30;
 
+    // ⚠️ RUTAS DE SUBCARPETAS:
+    // Cambia los nombres de subcarpeta abajo si en GitHub se llaman diferente
+    // (por ejemplo 'cuerdas' en vez de 'cuerda', o 'percusión' en vez de 'percusion')
+    const FOLDER = {
+        cuerda:    'instrumentos/cuerdas',
+        percusion: 'instrumentos/percusion',
+        viento:    'instrumentos/viento'
+    };
+
     const allInstruments = {
         cuerda: [
             'arpa.jpg', 'balalaika.jpg', 'banjo.jpg', 'violin.jpg', 'guitarra.jpg',
@@ -234,7 +243,7 @@ document.addEventListener('DOMContentLoaded', () => {
             instrumentEl.dataset.name = instrumentData.name;
 
             const img = document.createElement('img');
-            img.src = `instrumentos/${instrumentData.name}`;
+            img.src = `${FOLDER[instrumentData.category]}/${instrumentData.name}`;
             img.alt = instrumentData.name.replace('.jpg', '');
             img.draggable = false;
             instrumentEl.appendChild(img);
