@@ -9,11 +9,14 @@
 </head>
 <body>
 
-    <!-- Mensaje para girar el dispositivo (solo portrait en móvil) -->
+    <!-- Botón pantalla completa (solo PC) -->
+    <button id="fullscreen-btn" title="Pantalla completa">⛶</button>
+
+    <!-- Mensaje para girar el dispositivo -->
     <div id="rotate-device-message">
         <div class="rotate-icon">📱</div>
         <p>¡Gira tu dispositivo!</p>
-        <p style="font-size:0.7em; opacity:0.8;">Para jugar necesitas la posición horizontal</p>
+        <p class="rotate-sub">Para jugar necesitas la posición horizontal</p>
     </div>
 
     <!-- Login Screen -->
@@ -33,10 +36,10 @@
     <!-- Game Screen -->
     <div id="game-screen" class="game-screen hidden">
         <div class="header-game">
-            <p>Jugador: <span id="current-player"></span></p>
-            <p>Puntuación: <span id="score">0</span></p>
-            <p>Etapa: <span id="stage">1</span></p>
-            <p>Tiempo: <span id="timer">0:00</span></p>
+            <p>👤 <span id="current-player"></span></p>
+            <p>⭐ <span id="score">0</span></p>
+            <p>🎵 Etapa <span id="stage">1</span></p>
+            <p>⏱ <span id="timer">0:00</span></p>
         </div>
 
         <div id="main-game-content">
@@ -44,22 +47,22 @@
 
             <div id="categories-container">
                 <div id="viento-category" class="category" data-category="viento">
-                    <h2>Viento</h2>
+                    <h2>🎺 Viento</h2>
                     <div class="category-dropzone"></div>
                 </div>
                 <div id="cuerda-category" class="category" data-category="cuerda">
-                    <h2>Cuerda</h2>
+                    <h2>🎸 Cuerda</h2>
                     <div class="category-dropzone"></div>
                 </div>
                 <div id="percusion-category" class="category" data-category="percusion">
-                    <h2>Percusión</h2>
+                    <h2>🥁 Percusión</h2>
                     <div class="category-dropzone"></div>
                 </div>
             </div>
         </div>
 
         <div id="error-message-popup" class="hidden">
-            <p>¡Ups! ¡Ese instrumento no va ahí! Inténtalo de nuevo.</p>
+            <p>¡Ups! ¡Ese instrumento no va ahí!</p>
         </div>
 
         <div id="stage-summary-screen" class="hidden">
@@ -69,16 +72,16 @@
                 <span class="star" data-star="2">&#9733;</span>
                 <span class="star" data-star="3">&#9733;</span>
             </div>
-            <p>Tu puntuación en esta etapa: <span id="summary-stage-score"></span></p>
+            <p>Puntuación: <span id="summary-stage-score"></span></p>
             <button id="next-stage-button">Siguiente Etapa</button>
-            <button id="reset-game-button">Reiniciar Juego</button>
+            <button id="reset-game-button">Reiniciar</button>
         </div>
     </div>
 
     <!-- Fin del juego -->
     <div id="end-game-screen" class="game-screen hidden">
         <h1>¡Felicidades, <span id="final-player-name"></span>!</h1>
-        <p>Has terminado el juego con una puntuación final de: <span id="final-score"></span></p>
+        <p>Puntuación final: <span id="final-score"></span></p>
         <p>¡Eres un gran clasificador de instrumentos!</p>
         <button id="play-again-button">Jugar de Nuevo</button>
     </div>

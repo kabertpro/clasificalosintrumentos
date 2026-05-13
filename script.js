@@ -62,19 +62,72 @@ document.addEventListener('DOMContentLoaded', () => {
         ]
     };
 
-    // ─── Orientación ────────────────────────────────────────────────────────────
+    // ─── Pantalla completa ───────────────────────────────────────────────────────
+    const fullscreenBtn = document.getElementById('fullscreen-btn');
+
+    function requestFullscreen(el) {
+        if      (el.requestFullscreen)       return el.requestFullscreen();
+        else if (el.webkitRequestFullscreen) return el.webkitRequestFullscreen();
+        else if (el.mozRequestFullScreen)    return el.mozRequestFullScreen();
+        else if (el.msRequestFullscreen)     return el.msRequestFullscreen();
+    }
+    function exitFullscreen() {
+        if      (document.exitFullscreen)       return document.exitFullscreen();
+        else if (document.webkitExitFullscreen) return document.webkitExitFullscreen();
+        else if (document.mozCancelFullScreen)  return document.mozCancelFullScreen();
+        else if (document.msExitFullscreen)     return document.msExitFullscreen();
+    }
+    function isFullscreen() {
+        return !!(document.fullscreenElement || document.webkitFullscreenElement ||
+                  document.mozFullScreenElement || document.msFullscreenElement);
+    }
+
+    function updateFullscreenBtn() {
+        fullscreenBtn.textContent = isFullscreen() ? '✕' : '⛶';
+        fullscreenBtn.title       = isFullscreen() ? 'Salir de pantalla completa' : 'Pantalla completa';
+    }
+
+    fullscreenBtn.addEventListener('click', () => {
+        isFullscreen() ? exitFullscreen() : requestFullscreen(document.documentElement);
+    });
+
+    document.addEventListener('fullscreenchange',       updateFullscreenBtn);
+    document.addEventListener('webkitfullscreenchange', updateFullscreenBtn);
+    document.addEventListener('mozfullscreenchange',    updateFullscreenBtn);
+
+    // ─── Orientación + fullscreen automático en móvil ────────────────────────────
+    function isMobileDevice() {
+        return ('ontouchstart' in window || navigator.maxTouchPoints > 0) &&
+               Math.min(window.screen.width, window.screen.height) <= 768;
+    }
+
     function checkOrientation() {
         const isPortrait = window.innerHeight > window.innerWidth;
-        const isMobile   = Math.min(window.innerWidth, window.innerHeight) <= 768;
+        const mobile     = isMobileDevice();
 
-        if (isPortrait && isMobile) {
+        if (isPortrait && mobile) {
             rotateMessage.style.display = 'flex';
         } else {
             rotateMessage.style.display = 'none';
+            // Solicitar fullscreen automático en móvil landscape al hacer tap
+            if (mobile && !isFullscreen()) {
+                requestFullscreen(document.documentElement).catch(() => {});
+            }
         }
     }
 
-    window.addEventListener('resize', checkOrientation);
+    // Activar fullscreen en móvil al primer toque del usuario (requiere gesto)
+    function tryMobileFullscreen() {
+        if (isMobileDevice() && !isFullscreen()) {
+            requestFullscreen(document.documentElement).catch(() => {});
+        }
+        document.removeEventListener('touchstart', tryMobileFullscreen);
+        document.removeEventListener('click',      tryMobileFullscreen);
+    }
+    document.addEventListener('touchstart', tryMobileFullscreen, { once: true });
+    document.addEventListener('click',      tryMobileFullscreen, { once: true });
+
+    window.addEventListener('resize',            checkOrientation);
     window.addEventListener('orientationchange', checkOrientation);
     checkOrientation();
 
