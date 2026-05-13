@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Cambia los nombres de subcarpeta abajo si en GitHub se llaman diferente
     // (por ejemplo 'cuerdas' en vez de 'cuerda', o 'percusión' en vez de 'percusion')
     const FOLDER = {
-        cuerda:    'instrumentos/cuerdas',
+        cuerda:    'instrumentos/cuerda',
         percusion: 'instrumentos/percusion',
         viento:    'instrumentos/viento'
     };
